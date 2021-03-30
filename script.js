@@ -28,45 +28,45 @@ const today = new Date().toISOString().split('T')[0];
 dateEl.setAttribute('min', today);
 
 // Populate Countdown / Complete UI
-function updateDOM() {
-   countdownActive = setInterval(() => {
-    const now = new Date().getTime();
-    const distance = countdownValue - now;
+const updateDOM = () => {
+    countdownActive = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = countdownValue - now;
 
-    const days = Math.floor(distance / day);
-    const hours = Math.floor((distance % day) / hour);
-    const minutes = Math.floor((distance % hour) / minute);
-    const seconds = Math.floor((distance % minute) / second);
+        const days = Math.floor(distance / day);
+        const hours = Math.floor((distance % day) / hour);
+        const minutes = Math.floor((distance % hour) / minute);
+        const seconds = Math.floor((distance % minute) / second);
 
-    // Hide Input
-    inputContainer.hidden = true;
+        // Hide Input
+        inputContainer.hidden = true;
 
-    // If the countdown has ended, show complete
-    if (distance < 0) {
-        countdownEl.hidden = true;
-        clearInterval(countdownActive);
-        completeElInfo.textContent = `${countdownTitle} finished on ${countdownDate}`;
-        completeEl.hidden = false;
-    } else {
-        // Else, show the countdown progress
-        // Populate Countdown
-        countdownElTitle.textContent = `${countdownTitle}`;
-        timeElements[0].textContent = `${days}`;
-        timeElements[1].textContent = `${hours}`;
-        timeElements[2].textContent = `${minutes}`;
-        timeElements[3].textContent = `${seconds}`;
-        
-        // Hide Complete element
-        completeEl.hidden = true;
-        // Show Countdown
-        countdownEl.hidden = false;
-    }
-   }, second);
-   formSubmitBtn.disabled = true;
+        // If the countdown has ended, show complete
+        if (distance < 0) {
+            countdownEl.hidden = true;
+            clearInterval(countdownActive);
+            completeElInfo.textContent = `${countdownTitle} finished on ${countdownDate}`;
+            completeEl.hidden = false;
+        } else {
+            // Else, show the countdown progress
+            // Populate Countdown
+            countdownElTitle.textContent = `${countdownTitle}`;
+            timeElements[0].textContent = `${days}`;
+            timeElements[1].textContent = `${hours}`;
+            timeElements[2].textContent = `${minutes}`;
+            timeElements[3].textContent = `${seconds}`;
+
+            // Hide Complete element
+            completeEl.hidden = true;
+            // Show Countdown
+            countdownEl.hidden = false;
+        }
+    }, second);
+    formSubmitBtn.disabled = true;
 }
 
 // Take Values from Form Input
-function updateCountdown(e) {
+const updateCountdown = (e) => {
     // To stop page from refreshing
     e.preventDefault();
     countdownTitle = e.srcElement[0].value;
@@ -87,7 +87,7 @@ function updateCountdown(e) {
 }
 
 // Reset All Values
-function reset() {
+const reset = () => {
     formSubmitBtn.disabled = false;
     // Hide Countdowns, show Input
     countdownEl.hidden = true;
@@ -103,9 +103,9 @@ function reset() {
 
 }
 
-function restorePreviousCountdown() {
+const restorePreviousCountdown = () => {
     // Get countdown from localStorage if available
-    if(localStorage.getItem('countdown')) {
+    if (localStorage.getItem('countdown')) {
         inputContainer.hidden = true;
         savedCountdown = JSON.parse(localStorage.getItem('countdown'));
         countdownTitle = savedCountdown.title;
